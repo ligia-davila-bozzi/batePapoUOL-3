@@ -33,6 +33,28 @@ body{
     height: 45px;
 }
 
+.messages{
+    margin: 100px 0;
+    
+    display: flex;
+    flex-direction: column;
+
+    font-family: "Roboto", sans-serif;
+    font-size: 14px;
+}
+
+strong{
+    font-weight: 700;
+}
+
+li{
+    padding: 13px 0;
+}
+
+.status{
+    background-color: rgb(220, 220, 220);
+}
+
 .bottom{
     width: 100vw;
     height: 80px;
