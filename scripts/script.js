@@ -27,10 +27,17 @@ function enviarNomeUsuário(){
 function tratarSucesso(){
     if(idInterval === 0){
         idInterval = setInterval(enviarStatus, 5000)
+        setInterval(promiseMessages, 3000);
     }
+    promiseMessages();
+}
 
+function promiseMessages(){
     promise = axios.get(URL_MENSAGENS);
     promise.then(getMessages);
+
+    let lastMessage = document.querySelector('.messages').lastChild;
+    lastMessage.scrollIntoView();
 }
 
 function tratarErro(erro){
@@ -40,6 +47,8 @@ function tratarErro(erro){
 }
 
 function getMessages(resposta){
+    messagesBox.innerHTML = "";
+
     for(let i = 0; i < resposta.data.length; i++){
 
         if(resposta.data[i].type === 'status'){
@@ -79,15 +88,12 @@ function enviarStatus(){
 }
 
 function enviarMensagem (){
-    messagesBox.innerHTML = "";
-
     mensagem.from = nomeUsusario.name;
     mensagem.to = 'todos';
 	mensagem.text = document.querySelector('.input-message').value;
 	mensagem.type = 'message';
 
     promise = axios.post(URL_MENSAGENS, mensagem);
-
     promise.then(tratarSucesso);
 }
 
