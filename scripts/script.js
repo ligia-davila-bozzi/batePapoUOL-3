@@ -92,9 +92,8 @@ function enviarMensagem (){
     
     mensagem.from = nomeUsusario.name;
     mensagem.to = 'todos';
-	mensagem.text = mensagemDigitada.value;
-	mensagem.type = 'message';
-
+    mensagem.text = mensagemDigitada.value;
+    mensagem.type = 'message';
     mensagemDigitada.value = "";
 
     promise = axios.post(URL_MENSAGENS, mensagem);
