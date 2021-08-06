@@ -96,8 +96,7 @@ function sendMessage (){
     message.type = 'message';
     textInput.value = "";
 
-    promise = axios.post(URL_MESSAGES
-    , message);
+    promise = axios.post(URL_MESSAGES, message);
     promise.then(handleSucces);
 }
 
