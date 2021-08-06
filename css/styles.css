@@ -1,12 +1,12 @@
-*{
+* {
     box-sizing: border-box;
 }
 
-body{
+body {
     background-color: rgb(243, 243, 243);
 }
 
-.top{
+.top {
     height: 80px;
     width: 100vw;
     background-color: white;
@@ -23,17 +23,17 @@ body{
     box-shadow: 0 4px 6px rgb(200, 200, 200);
 }
 
-.image-top{
+.image-top {
     width: 75px;
     height: 53px;
 }
 
-.people-icon{
+.people-icon {
     width: 45px;
     height: 45px;
 }
 
-.messages{
+.messages {
     width: 100vw;
     height: calc(100vh - 170px);
     margin: 85px 0;
@@ -46,28 +46,28 @@ body{
     font-size: 14px;
 }
 
-strong{
+strong {
     font-weight: 700;
 }
 
-li{
+li {
     padding: 13px 10px;
     margin: 3px 0;
 }
 
-.status{
+.status {
     background-color: rgb(220, 220, 220);
 }
 
-.message{
+.message {
     background-color: white;;
 }
 
-.private_message{
+.private_message {
     background-color: rgb(255, 222, 222);
 }
 
-.bottom{
+.bottom {
     width: 100vw;
     height: 80px;
     background-color: white;
@@ -83,14 +83,14 @@ li{
     box-shadow: 0 -3px 6px rgb(200, 200, 200);
 }
 
-.input-message{
+.input-message {
     border: none;
 
     font-family: "Roboto", sans-serif;
     font-size: 18px;
 }
 
-.paper-plane-icon{
+.paper-plane-icon {
     width: 26px;
     height: 26px;
 }

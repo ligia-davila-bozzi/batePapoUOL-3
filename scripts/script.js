@@ -1,103 +1,104 @@
-const  URL_MENSAGENS = 'https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages';
+const  URL_MESSAGES = 'https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/messages';
 const URL_STATUS = 'https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/status'
-const URL_PARTICIPANTES = 'https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/participants';
+const URL_PARTICIPANTS = 'https://mock-api.bootcamp.respondeai.com.br/api/v3/uol/participants';
 
 let promise;
 let idInterval = 0;
 let messagesBox = document.querySelector('.messages');
 
-const nomeUsusario = {
+const userName = {
     name: prompt("Digite seu nome:")
 }
 
-const mensagem = {
+const message = {
     from: "",
     to: "",
 	text: "",
 	type: ""
 }
 
-function enviarNomeUsuário(){
-    promise = axios.post(URL_PARTICIPANTES, nomeUsusario);
+function sendUserName(){
+    promise = axios.post(URL_PARTICIPANTS, userName);
 
-    promise.then(tratarSucesso);
-    promise.catch(tratarErro);
+    promise.then(handleSucces);
+    promise.catch(handleError);
 }
 
-function tratarSucesso(){
+function handleSucces(){
     if(idInterval === 0){
-        idInterval = setInterval(enviarStatus, 5000)
+        idInterval = setInterval(sendStatus, 5000)
         setInterval(promiseMessages, 3000);
     }
     promiseMessages();
 }
 
-function enviarStatus(){
-    promise = axios.post(URL_STATUS, nomeUsusario);
+function sendStatus(){
+    promise = axios.post(URL_STATUS, userName);
 }
 
 function promiseMessages(){
-    promise = axios.get(URL_MENSAGENS);
+    promise = axios.get(URL_MESSAGES);
     promise.then(getMessages);
 
     let lastMessage = document.querySelector('.messages').lastChild;
     lastMessage.scrollIntoView();
 }
 
-function tratarErro(erro){
-    nomeUsusario.name = prompt("Este nome já existe no chat, favor escolher outro:");
+function handleError(erro){
+    userName.name = prompt("Este nome já existe no chat, favor escolher outro:");
 
-    enviarNomeUsuário();
+    sendUserName();
 }
 
-function getMessages(resposta){
+function getMessages(answear){
     messagesBox.innerHTML = "";
 
-    for(let i = 0; i < resposta.data.length; i++){
+    for(let i = 0; i < answear.data.length; i++){
 
-        if(resposta.data[i].type === 'status'){
+        if(answear.data[i].type === 'status'){
             messagesBox.innerHTML += `
                 <li class="status">
-                    (${resposta.data[i].time})
-                    <strong>${resposta.data[i].from}</strong>
-                    ${resposta.data[i].text}
+                    (${answear.data[i].time})
+                    <strong>${answear.data[i].from}</strong>
+                    ${answear.data[i].text}
                 </li>`;
         }
 
-        else if(resposta.data[i].type === 'message'){
+        else if(answear.data[i].type === 'message'){
             messagesBox.innerHTML += `
                 <li class="message">
-                    (${resposta.data[i].time})
-                    <strong>${resposta.data[i].from}</strong>
+                    (${answear.data[i].time})
+                    <strong>${answear.data[i].from}</strong>
                     para
-                    <strong>${resposta.data[i].to}</strong>:
-                    ${resposta.data[i].text}
+                    <strong>${answear.data[i].to}</strong>:
+                    ${answear.data[i].text}
                 </li>`;
 
-        } else if((resposta.data[i].from === nomeUsusario.name) || (resposta.data[i].to === nomeUsusario.name)) {
+        } else if((answear.data[i].from === userName.name) || (answear.data[i].to === userName.name)) {
             messagesBox.innerHTML += `
                 <li class="private_message">
-                    (${resposta.data[i].time})
-                    <strong>${resposta.data[i].from}</strong>
+                    (${answear.data[i].time})
+                    <strong>${answear.data[i].from}</strong>
                     reservadamente para
-                    <strong>${resposta.data[i].to}</strong>:
-                    ${resposta.data[i].text}
+                    <strong>${answear.data[i].to}</strong>:
+                    ${answear.data[i].text}
                 </li>`;
         }
     }
 }
 
-function enviarMensagem (){
-    let mensagemDigitada = document.querySelector('.input-message');
+function sendMessage (){
+    let textInput = document.querySelector('.input-message');
     
-    mensagem.from = nomeUsusario.name;
-    mensagem.to = 'todos';
-    mensagem.text = mensagemDigitada.value;
-    mensagem.type = 'message';
-    mensagemDigitada.value = "";
+    message.from = userName.name;
+    message.to = 'todos';
+    message.text = textInput.value;
+    message.type = 'message';
+    textInput.value = "";
 
-    promise = axios.post(URL_MENSAGENS, mensagem);
-    promise.then(tratarSucesso);
+    promise = axios.post(URL_MESSAGES
+    , message);
+    promise.then(handleSucces);
 }
 
-enviarNomeUsuário();
+sendUserName();
