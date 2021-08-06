@@ -32,6 +32,10 @@ function tratarSucesso(){
     promiseMessages();
 }
 
+function enviarStatus(){
+    promise = axios.post(URL_STATUS, nomeUsusario);
+}
+
 function promiseMessages(){
     promise = axios.get(URL_MENSAGENS);
     promise.then(getMessages);
@@ -70,28 +74,28 @@ function getMessages(resposta){
                     ${resposta.data[i].text}
                 </li>`;
 
-        } else if(resposta.data[i].type === nomeUsusario) {
+        } else if((resposta.data[i].from === nomeUsusario.name) || (resposta.data[i].to === nomeUsusario.name)) {
             messagesBox.innerHTML += `
                 <li class="private_message">
                     (${resposta.data[i].time})
                     <strong>${resposta.data[i].from}</strong>
                     reservadamente para
-                    <strong>${resposta.data[i].to}:
+                    <strong>${resposta.data[i].to}</strong>:
                     ${resposta.data[i].text}
                 </li>`;
         }
     }
 }
 
-function enviarStatus(){
-    promise = axios.post(URL_STATUS, nomeUsusario);
-}
-
 function enviarMensagem (){
+    let mensagemDigitada = document.querySelector('.input-message');
+    
     mensagem.from = nomeUsusario.name;
     mensagem.to = 'todos';
-	mensagem.text = document.querySelector('.input-message').value;
+	mensagem.text = mensagemDigitada.value;
 	mensagem.type = 'message';
+
+    mensagemDigitada.value = "";
 
     promise = axios.post(URL_MENSAGENS, mensagem);
     promise.then(tratarSucesso);
